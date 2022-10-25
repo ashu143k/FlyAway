@@ -15,7 +15,7 @@ public class AdminDetails {
 	private String userEmail;
 	private String password;
 
-	public AdminDetails() {
+	public AdminDetails() { 
 		super();
 	}
 
