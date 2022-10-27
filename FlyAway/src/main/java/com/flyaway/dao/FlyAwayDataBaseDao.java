@@ -91,23 +91,16 @@ public class FlyAwayDataBaseDao {
 		try {
 		Session session = factory.openSession();
 		session.beginTransaction();
-		@SuppressWarnings("deprecation")
-		Criteria cr = session.createCriteria(AdminDetails.class);
-		Criterion checkoldPassword = Restrictions.ilike("password", oldPassword);
-		cr.add(checkoldPassword);
-		if(cr.uniqueResult()!=null) {
-			@SuppressWarnings("rawtypes")
-			Query q=session.createQuery("update AdminDetails set password=:password where userEmail=:userEmail");  
+			Query q=session.createQuery("update AdminDetails set password=:password where userEmail=:userEmail and password=:oldPassword");  
 			q.setParameter("password",newPassword);  
-			q.setParameter("userEmail",username);  
-			q.executeUpdate(); 	
+			q.setParameter("userEmail",username);
+			q.setParameter("oldPassword", oldPassword);
+			int flag=q.executeUpdate(); 	
 		       session.getTransaction().commit();
-
+		       if(flag==1)
 			success="Password Changed";
-		}
-		else {
+		       else
 			success="Incorrect Old Password";
-		}
 		session.close();
 		}catch (Exception e) {
 			e.printStackTrace();

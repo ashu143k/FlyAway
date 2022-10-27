@@ -86,6 +86,7 @@ $(document).ready(function(){
 	    $(".Flightdetails").hide();
 	    $(".buttonContainerdiv").hide();
 	    $(".header").hide();
+	    $(".SNDdiv").hide();
 	    
 	  });
 	  $("#FlightDetailButton").click(function(){
@@ -759,7 +760,6 @@ font-family: sans-serif;
 .textDiv{
     font-weight: bolder;
     position: relative;
-    color: white;
     text-align: center;
     top: 80px;
 }
