@@ -8,7 +8,7 @@
 
 .innerDiv
 {
-    background: black;
+      background: #7fe1e29e;
     height: 500px;
     position: relative;
     margin: auto;
@@ -81,6 +81,8 @@ font-family: sans-serif;
     top: 80px;
 }
 
+body {
+background-image:url(./images/adminPageBG.jpg);
 }
 </style>
 <meta charset="UTF-8">

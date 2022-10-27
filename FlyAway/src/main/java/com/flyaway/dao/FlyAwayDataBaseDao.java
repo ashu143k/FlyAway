@@ -166,4 +166,48 @@ public class FlyAwayDataBaseDao {
 		return airLineId;
 	}
 
+	public Integer deleteAirLine(Integer airLineId) {
+		Integer airLineDeleted ;
+		try {
+		AirLineDetails deleteAirLine = new AirLineDetails();
+		deleteAirLine.setId(airLineId);
+		Session session = factory.openSession();
+		Transaction transaction = session.beginTransaction();
+		session.delete(deleteAirLine);
+		transaction.commit();
+		airLineDeleted = 1;
+		}catch (Exception ex) {
+			airLineDeleted=0;
+			ex.printStackTrace();
+		}
+		return airLineDeleted;
+	}
+
+	public Integer addCity(CitiesDetails newCity) {
+		Integer cityId = null;
+		Session session = factory.openSession();
+		Transaction txn = session.beginTransaction();
+		cityId = (Integer) session.save(newCity);
+		txn.commit();
+		session.close();
+		return cityId;
+	}
+
+	public Integer deleteCity(Integer cityId) {
+		Integer cityDeleted ;
+		try {
+		CitiesDetails deleteCity = new CitiesDetails();
+		deleteCity.setId(cityId);
+		Session session = factory.openSession();
+		Transaction transaction = session.beginTransaction();
+		session.delete(deleteCity);
+		transaction.commit();
+		cityDeleted = 1;
+		}catch (Exception ex) {
+			cityDeleted=0;
+			ex.printStackTrace();
+		}
+		return cityDeleted;
+	}
+
 }

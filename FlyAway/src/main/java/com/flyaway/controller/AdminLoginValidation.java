@@ -1,8 +1,10 @@
 package com.flyaway.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 	import jakarta.servlet.annotation.WebServlet;
 	import jakarta.servlet.http.HttpServlet;
@@ -38,6 +40,13 @@ public class AdminLoginValidation extends HttpServlet {
 			session.setAttribute("Cities", cities);
 			session.setAttribute("Flights", flights);
 			response.sendRedirect("adminPage.jsp");
+		}else {
+			RequestDispatcher rd= request.getRequestDispatcher("AdminLogin.jsp");
+			PrintWriter out= response.getWriter();
+			rd.include(request, response);
+			out.print("<div class='loginFailed' ><span style= 'color:red'>Either Email or Password is incorrect.</span></div>");
+			
+			
 		}
 		
 	}

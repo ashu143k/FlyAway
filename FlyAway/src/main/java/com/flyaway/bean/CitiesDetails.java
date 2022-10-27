@@ -18,6 +18,11 @@ public class CitiesDetails {
 		super();
 	}
 
+	public CitiesDetails(String cityName) {
+		super();
+		this.cityName = cityName;
+	}
+
 	public int getId() {
 		return id;
 	}

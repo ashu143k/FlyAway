@@ -73,6 +73,11 @@ font-family: sans-serif;
     text-align: center;
     top: 80px;
 }
+.loginFailed{
+    position: relative;
+    left: 42%;
+    bottom: 47px;
+    width: 300px;
 }
 </style>
 <meta charset="UTF-8">

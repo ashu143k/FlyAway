@@ -20,8 +20,34 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
-
-function flightDelete(value){
+function airLineDelete(airLineId){
+	 var xhttp;
+	    xhttp = new XMLHttpRequest();
+	    xhttp.onreadystatechange = function () {
+	        if (this.readyState === 4 && this.status === 200) {
+	            alert("Air Line Deleted Successfully");
+	            location.reload();
+	        }
+	    };
+	    xhttp.open("post", '/FlyAway/DeleteService', true);
+	    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	    xhttp.send("airLineId="+airLineId);
+}
+function cityDelete(cityId){
+	 var xhttp;
+	    xhttp = new XMLHttpRequest();
+	    xhttp.onreadystatechange = function () {
+	        if (this.readyState === 4 && this.status === 200) {
+	            alert("City Deleted Successfully");
+	            location.reload();
+	        }
+	    };
+	    xhttp.open("post", '/FlyAway/DeleteService', true);
+	    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	    xhttp.send("cityId="+cityId);
+	
+}
+function flightDelete(flightId){
 	 var xhttp;
 	    xhttp = new XMLHttpRequest();
 	    xhttp.onreadystatechange = function () {
@@ -30,9 +56,9 @@ function flightDelete(value){
 	            location.reload();
 	        }
 	    };
-	    xhttp.open("post", '/FlyAway/DeleteFlight', true);
+	    xhttp.open("post", '/FlyAway/DeleteService', true);
 	    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	    xhttp.send("FlightId="+value);
+	    xhttp.send("FlightId="+flightId);
 
 }
 
@@ -42,6 +68,9 @@ $(document).ready(function(){
 	    $(".Flightdetails").show();
 	    $(".AirlineDetailDiv").hide();
 	    $(".SNDdiv").hide();
+	    $(".AddFlightDiv").hide();
+	    $(".AddAirLineDiv").hide();
+	    
 	  });
 	  $("#closeButtonIdFlightDetails").click(function(){
 		    $(".Flightdetails").hide();
@@ -50,11 +79,15 @@ $(document).ready(function(){
 		    $(".AirlineDetailDiv").show();
 		    $(".SNDdiv").hide();
 		    $(".Flightdetails").hide();
+		    $(".AddFlightDiv").hide();
+		    $(".AddAirLineDiv").hide();
 		  });
 	  $("#SNDDetailButton").click(function(){
 		    $(".SNDdiv").show();
 		    $(".AirlineDetailDiv").hide(); 	
 		    $(".Flightdetails").hide();
+		    $(".AddFlightDiv").hide();
+		    $(".AddAirLineDiv").hide();
 		  });
 	  $("#closeButtonIdAirlineDetailDiv").click(function(){
 		    $(".AirlineDetailDiv").hide();
@@ -76,6 +109,13 @@ $(document).ready(function(){
 		  });
 	  $("#closeButtonaddAirLineDiv").click(function(){
 		    $(".AddAirLineDiv").hide();
+		  });
+	  $("#addSNDId").click(function(){
+		    $(".AddNewCityDiv").show();
+		    $(".SNDdiv").hide();
+		  });
+	  $("#closeButtonaddCityDiv").click(function(){
+		    $(".AddNewCityDiv").hide();
 		  });
 	  
 	});
@@ -129,7 +169,11 @@ display:none;
     position: relative;
     top: 30px;
     left: 20%;
-    height: 100%;
+
+}
+.FlightTableDiv{
+      height: 400px;
+    overflow: auto;
 }
 h3{
 text-align: center;
@@ -203,8 +247,11 @@ display : none;
     position: relative;
     top: 30px;
     left: 20%;
-    height: 100%;
 
+}
+.AirLineTableDiv{
+     height: 400px;
+    overflow: auto;
 }
 .SNDdiv{
 display : none;
@@ -217,7 +264,12 @@ display : none;
     position: relative;
     top: 30px;
     left: 20%;
-    height: 100%;
+    
+}
+.SNDTableDiv{
+height: 400px;
+    overflow: auto;
+
 }
 .buttonContainerdiv{
     width: 50%;
@@ -301,6 +353,20 @@ display:none;
     height: 100%;
 }
 .AddAirLineDiv{
+	display:none;
+    width: 60%;
+    align-items: center;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 1px 7px 0 rgb(0 0 0 / 40%);
+    background-color: #e7e7e700;
+    position: relative;
+    top: 30px;
+    left: 20%;
+    height: 100%;
+}
+
+.AddNewCityDiv{
 	display:none;
     width: 60%;
     align-items: center;
@@ -410,7 +476,7 @@ position: relative;
 	width: 250px ;
 	left: 302px;
     position: absolute;
-   top: 47%;
+   top: 55%;
 	
 	}
 #dateId{
@@ -435,10 +501,23 @@ background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blac
     margin-left: 5%;
     top: 24px;
 }
+
 .FlightNumberDiv{
     position: relative;
     margin-left: 33%;
     top: -27px
+}
+.CityNameTextBoxDiv{
+width: 250px;
+    position: relative;
+    margin-left: 20%;
+    top: 20px;
+}
+.CityIATATextBoxDiv{
+width: 250px;
+    position: relative;
+    margin-left: 20%;
+    top: 25px;
 }
 .PriceClass{
 border-radius: 10px;
@@ -518,6 +597,7 @@ text-align: center;
     left: 15%;
     top: 7px;
 }
+
 .addAirLineSubmitButtonDiv{
     position: relative;
     left: 50%;
@@ -526,6 +606,56 @@ text-align: center;
 }
 #addAirLineId{
 width : 150px;
+}
+.addAirLineButtonDiv{
+	position: relative;
+    left: 40%;
+    width: 200px;
+    bottom: 10px;
+}
+.addSNDButtonDiv{
+    left: 36%;
+    position: relative;
+    width: 200px
+}
+.CityNameClass{
+border-radius: 10px;
+    width: 250px;
+    height: 50px;
+    text-align: center;
+    background-color: #fff;
+    font-family: Arial;
+    cursor: text;
+}
+.CityIATAClass{
+border-radius: 10px;
+    width: 250px;
+    height: 50px;
+    text-align: center;
+    background-color: #fff;
+    font-family: Arial;
+    cursor: text;
+}
+.addCitySubmitButtonDiv{
+position: relative;
+    left: 60%;
+    bottom: 55px;
+    width: 100px;
+}
+#addCityId{
+width :200px; 	
+}
+#ScrollId::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+#ScrollId::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+#ScrollId::-webkit-scrollbar-thumb {
+  background-color:  #91f299;
+  outline: 1px solid slategrey;
 }
 </style>
 <meta charset="UTF-8">
@@ -558,6 +688,7 @@ width : 150px;
 	<div class="Flightdetails">
 	<div class="closeButtonDiv"><button class="btn-close" aria-label="Close" id="closeButtonIdFlightDetails"></button></div>
 	<h3>Flight Details </h3>
+	<div class = FlightTableDiv id="ScrollId">
 		<table class="table table-width" >
 			<tr>
 				<th>Source</th>
@@ -579,13 +710,15 @@ width : 150px;
 							}
 						%>
 		</table>
+		</div>
 		<div class = "addFlightButtonDiv"><button id="addNewFlight" class="button-30" role="button">
 		Add Flight
 		</button></div>
 	</div>
 	<div class="AddFlightDiv" >
 	<div class="closeButtonDiv"><button class="btn-close" aria-label="Close" id="closeButtonaddFlightDiv"></button></div>
-	<form action ="addNewFlight" method ="post" >
+	<div class = "headDiv" ><h2 >Add New Flight</h2></div>
+	<form action ="AddNewFlight" method ="post" >
 						<div class="SourceDiv"><select class="form-select" name="SourceName" required>
 						<option selected style="display: none">Source City</option>
 						<%
@@ -634,10 +767,12 @@ width : 150px;
 	<div class="AirlineDetailDiv">
 	<div class="closeButtonDiv"><button class="btn-close" aria-label="Close" id="closeButtonIdAirlineDetailDiv"></button></div>
 	<h3>AirLine Master List</h3>
+	<div class= "AirLineTableDiv" id="ScrollId">
 		<table class="table table-width" >
 			<tr>
 				<th>S.No</th>
 				<th>Air Lines</th>
+				<th>Delete Airline</th>
 			</tr>
 			<%
 							List<AirLineDetails> airlines = (List<AirLineDetails>) session.getAttribute("AirLines");
@@ -645,10 +780,12 @@ width : 150px;
 							{
 								out.print("<tr>");
 								out.print("<td>"+ airline.getId()+"</td>");
-								out.print("<td>"+ airline.getAirlineName() +"</td></tr>");
+								out.print("<td>"+ airline.getAirlineName() +"</td>");
+								out.print("<td><button id='deleteAirline'onclick='airLineDelete("+airline.getId()+")'>Delete</button></td></tr>");
 							}
 						%>
 		</table>
+		</div>
 				<div class = "addAirLineButtonDiv"><button id="addAirLine" class="button-30" role="button">
 		Add Air Line
 		</button></div>
@@ -661,14 +798,18 @@ width : 150px;
 	<div class ="addAirLineSubmitButtonDiv"><input id="addAirLineId" type="submit" value="Add New AirLine" class="button-30" role="button" ></div>
 	</form>
 	</div>
+	
+	
 	<div class="SNDdiv">
 		<div class="closeButtonDiv"><button class="btn-close" aria-label="Close" id="closeButtonIdSNDdiv"></button></div>
 	<h3>Source And Destination Master List</h3>
+		<div class="SNDTableDiv" id="ScrollId">
 		<table class="table table-width">
 			
 			<tr>
 				<th>S.No</th>
 				<th>Source And Destination cities</th>
+				<th>Delete City</th>
 			</tr>
 						<%
 							List<CitiesDetails> cityDetails = (List<CitiesDetails>) session.getAttribute("Cities");
@@ -676,10 +817,27 @@ width : 150px;
 							{
 								out.print("<tr>");
 								out.print("<td>"+ cityDetail.getId()+"</td>");
-								out.print("<td>"+ cityDetail.getCityName()+"</td></tr>");
+								out.print("<td>"+ cityDetail.getCityName()+"</td>");
+								out.print("<td><button id='deleteCity' onclick='cityDelete("+cityDetail.getId()+")'>Delete</button></td></tr>");
+								
 							}
 						%>
 		</table>
+		</div>
+		<div class = "addSNDButtonDiv">
+		<button id="addSNDId" class="button-30" role="button">
+		Add New City
+		</button>
+		</div>
+	</div>
+	<div class="AddNewCityDiv" >
+	<div class="closeButtonDiv"><button class="btn-close" aria-label="Close" id="closeButtonaddCityDiv"></button></div>
+	<div class = "headDiv" ><h2 >Add New City</h2></div>
+	<form action = "AddNewCity" method = "Post">
+	<div class="CityNameTextBoxDiv "><input type="text" class="CityNameClass" name="CityName" placeholder="Enter City" required></div>
+	<div class="CityIATATextBoxDiv "><input type="text" class="CityIATAClass" name="CityIATA" placeholder="Enter City IATA" required></div>
+	<div class ="addCitySubmitButtonDiv"><input id="addCityId" type="submit" value="Add New City" class="button-30" role="button" ></div>
+	</form>
 	</div>
 
 
