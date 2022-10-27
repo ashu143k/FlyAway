@@ -150,9 +150,6 @@ width: 560px;
 <div class="header">
 			<a href="index.jsp" class="logo">FlyAway</a>
 				<div class="logoDiv"></div>
-					<div class="header-right">
-						<a href="about">About</a>
-					</div>
 				</div>
 <div class="container">
 

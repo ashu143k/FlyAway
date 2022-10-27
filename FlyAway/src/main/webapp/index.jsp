@@ -20,7 +20,6 @@
 					<div class="header-right">
 						<a class="active" href="index.jsp">Home</a> 
 						<a href="AdminLogin.jsp">Admin Login</a> 
-						<a href="about">About</a>
 					</div>
 		</div>
 			<form action="SearchFlight" method="post">

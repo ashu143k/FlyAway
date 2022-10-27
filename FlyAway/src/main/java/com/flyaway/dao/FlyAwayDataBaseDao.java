@@ -2,12 +2,7 @@ package com.flyaway.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.criteria.Root;
-
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -39,6 +34,7 @@ public class FlyAwayDataBaseDao {
 	@SuppressWarnings("unchecked")
 	public List<FlightDetails> searchFlights(String sourceCity, String destinationCity, String date ) {
 		List<FlightDetails> flights = null;
+		try{
 		Session session = factory.openSession();
 		@SuppressWarnings("deprecation")
 		Criteria cr = session.createCriteria(FlightDetails.class);
@@ -51,12 +47,15 @@ public class FlyAwayDataBaseDao {
 		cr.add(andExp1);
 		flights = cr.list();
 		session.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		return flights;
 	}
 
 	public boolean ValidateUser(String username, String password) {
-		boolean flag;
-		Session session = factory.openSession();
+		boolean flag = false;
+		try{Session session = factory.openSession();
 		@SuppressWarnings("deprecation")
 		Criteria cr = session.createCriteria(AdminDetails.class);
 		Criterion sourceName = Restrictions.ilike("userEmail", username);
@@ -70,6 +69,9 @@ public class FlyAwayDataBaseDao {
 			 flag= false;
 		}
 		session.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		return flag ;
 	}
 
@@ -77,6 +79,7 @@ public class FlyAwayDataBaseDao {
 		List<FlightDetails> flights = null;
 		Session session = factory.openSession();
 		String hql = "FROM FlightDetails";
+		@SuppressWarnings("unchecked")
 		TypedQuery<FlightDetails> query = session.createQuery(hql);
 		flights = query.getResultList();
 		session.close();
@@ -84,14 +87,16 @@ public class FlyAwayDataBaseDao {
 	}
 
 	public String updatePassword(String oldPassword, String newPassword ,String username) {
-		String success;
-		AdminDetails changePassword = null;
+		String success = null;
+		try {
 		Session session = factory.openSession();
 		session.beginTransaction();
+		@SuppressWarnings("deprecation")
 		Criteria cr = session.createCriteria(AdminDetails.class);
 		Criterion checkoldPassword = Restrictions.ilike("password", oldPassword);
 		cr.add(checkoldPassword);
 		if(cr.uniqueResult()!=null) {
+			@SuppressWarnings("rawtypes")
 			Query q=session.createQuery("update AdminDetails set password=:password where userEmail=:userEmail");  
 			q.setParameter("password",newPassword);  
 			q.setParameter("userEmail",username);  
@@ -104,6 +109,10 @@ public class FlyAwayDataBaseDao {
 			success="Incorrect Old Password";
 		}
 		session.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return success;
 	}
 

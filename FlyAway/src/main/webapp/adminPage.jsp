@@ -7,7 +7,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="adminPageStyle.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -62,14 +61,41 @@ function flightDelete(flightId){
 
 }
 
+function changePassword(){
+	
+	var oldPassword= document.getElementById('oldPassword').value;
+	var newPassword= document.getElementById('newPassword').value;
+	var xhttp;
+	    xhttp = new XMLHttpRequest();
+	    xhttp.onreadystatechange = function () {
+	        if (this.readyState === 4 && this.status === 200) {
+	            alert("Password Changed");
+	            location.reload();
+	        }
+	    };
+	    xhttp.open("post", '/FlyAway/ChangePasswordValidation', true);
+	    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	    xhttp.send("newPassword="+newPassword+"&oldPassword="+oldPassword);
+	
+	
+}
 
 $(document).ready(function(){
+	$("#changePasswordButtonId").click(function(){
+	    $(".changePassMainDiv").show();
+	    $(".Flightdetails").hide();
+	    $(".buttonContainerdiv").hide();
+	    $(".header").hide();
+	    
+	  });
 	  $("#FlightDetailButton").click(function(){
 	    $(".Flightdetails").show();
 	    $(".AirlineDetailDiv").hide();
 	    $(".SNDdiv").hide();
 	    $(".AddFlightDiv").hide();
 	    $(".AddAirLineDiv").hide();
+	    $(".AddNewCityDiv").hide();
+	    
 	    
 	  });
 	  $("#closeButtonIdFlightDetails").click(function(){
@@ -81,6 +107,7 @@ $(document).ready(function(){
 		    $(".Flightdetails").hide();
 		    $(".AddFlightDiv").hide();
 		    $(".AddAirLineDiv").hide();
+		    $(".AddNewCityDiv").hide();
 		  });
 	  $("#SNDDetailButton").click(function(){
 		    $(".SNDdiv").show();
@@ -88,6 +115,7 @@ $(document).ready(function(){
 		    $(".Flightdetails").hide();
 		    $(".AddFlightDiv").hide();
 		    $(".AddAirLineDiv").hide();
+		    $(".AddNewCityDiv").hide();
 		  });
 	  $("#closeButtonIdAirlineDetailDiv").click(function(){
 		    $(".AirlineDetailDiv").hide();
@@ -122,7 +150,7 @@ $(document).ready(function(){
 
 
 setTimeout(function() {
-    $('#mydiv').fadeOut('fast');
+    $('#popupdiv').fadeOut('fast');
 }, 2500);
 </script>
 <style type="text/css">
@@ -152,11 +180,18 @@ table {
     right: 1%;
 }
 
-#mydiv {
-	width: 100px;
-	height: 100px;
-	text-align: center;
-	display: none;
+#popupdiv {
+  width: 190px;
+    height: 32px;
+    text-align: center;
+    display: none;
+    position: absolute;
+    left: 45%;
+    top: 18px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 7px 0 rgb(0 0 0 / 40%);
+    background-color: #83fa8c;
 }
 .Flightdetails{
 display:none;
@@ -657,11 +692,138 @@ width :200px;
   background-color:  #91f299;
   outline: 1px solid slategrey;
 }
+.innerDiv
+{
+      background: #7fe1e29e;
+    height: 500px;
+    position: relative;
+    margin: auto;
+    width: 500px;
+    align-content: center;
+    top: 100px;
+    border-radius: 20px;
+}
+.userDiv{
+    position: relative;
+        top: 115px;
+    left: 102px;
+    height: 50px;
+    width: 300px;
+}
+.passwordDiv{
+position: relative;
+   top: 135px;
+    left: 102px;
+}
+.repasswordDiv{
+position: relative;
+   top: 145px;
+    left: 102px;
+}
+.ChangePasswordButtonClass{
+    top: 195px;
+    left: 132px;
+    font-size: larger;
+    background-image: var(--color-btn-primary-bg,linear-gradient(93deg,#53b2fe,#065af3));
+    border: 0;
+    border-radius: 34px;
+    box-shadow: 0 1px 7px 0 rgb(0 0 0 / 20%);
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    flex-shrink: 0;
+    outline: 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 253px;
+    padding: 10px;
+    margin-bottom: -32px;
+    opacity: 1;
+    position: relative;
+
+}
+.ChangePasswordInput{
+font-family: sans-serif;
+    /* min-height: auto; */
+    /* padding: 1em 0.75em; */
+    height: 50px;
+    border: 0;
+    background: white;
+    transition: all .2s linear;
+    width: 300px;
+    text-align: center;
+    font-size: inherit;
+    font-weight: 400;
+    border-radius: 10px;
+}
+.textDiv{
+    font-weight: bolder;
+    position: relative;
+    color: white;
+    text-align: center;
+    top: 80px;
+}
+.changePassMainDiv{
+display: none;
+    
+}
+#changePasswordButtonId{
+float: left;
+    background: #ffffff61;
+    color: black;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 25px;
+    border-radius: 10px;
+    border : 0px;
+    }
+    #SubmitButtonToChangePassword{
+     top: 195px;
+    left: 132px;
+    font-size: larger;
+    background-image: var(--color-btn-primary-bg,linear-gradient(93deg,#53b2fe,#065af3));
+    border: 0;
+    border-radius: 34px;
+    box-shadow: 0 1px 7px 0 rgb(0 0 0 / 20%);
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    flex-shrink: 0;
+    outline: 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 253px;
+    padding: 10px;
+    margin-bottom: -32px;
+    opacity: 1;
+    position: relative;
+    }
 </style>
 <meta charset="UTF-8">
 <title>Admin Page</title>
 </head>
 <body>
+<div class="changePassMainDiv">
+<div class="innerDiv">
+<div class="textDiv">
+              <h1>Change Login Password</h1>
+              <p>Please enter your password!</p></div>
+<div class= "userDiv">
+<input type = "password" id="oldPassword" class="ChangePasswordInput" placeholder="Old Password" required>
+</div>
+<div class ="passwordDiv">
+<input type = "password" id="newPassword" class="ChangePasswordInput" placeholder="New Password" required/>
+</div>
+<div>
+<button id="SubmitButtonToChangePassword"  onclick = changePassword()>RESET PASSWORD</button>
+</div>
+</div>
+</div>
+	<%
+out.print("<div id ='popupdiv' display:'block'>"+ session.getAttribute("passwordChangeStatus") +"</div>");
+%>
 	<%
 	if(session.getAttribute("UName") == null )
 		response.sendRedirect("AdminLogin.jsp");
@@ -675,7 +837,7 @@ width :200px;
 		<a href="index.jsp" >Logout</a>
 		</div>
 			<div class="buttonHeader">
-			<a href="changePassword.jsp">RESET PASSWORD</a>
+			<button id= "changePasswordButtonId" >RESET PASSWORD</button>
 		</div>
 	
 	</div>
@@ -841,9 +1003,7 @@ width :200px;
 	</div>
 
 
-	<%
-out.print("<div id ='mydiv' display:'block'>"+ session.getAttribute("passwordChangeStatus") +"</div>");
-%>
+
 
 </body>
 </html>

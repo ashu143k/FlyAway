@@ -179,9 +179,6 @@ session.setAttribute("TotalAmount",total );
 		<div class="header">
 		<a href="index.jsp" class="logo">FlyAway</a>
 		<div class="logoDiv"></div>
-		<div class="header-right">
-			<a href="about">About</a>
-		</div>
 	</div>
 	<div class="PaymentPageDiv">
 <div class="yourBookingDiv">
